@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 RUN apt-get update
-RUN apt-get install -y git vim htop tmux python3 python3-pip
+RUN apt-get install -y git vim htop tmux python3 python3-pip ffmpeg
 
 # 레포 클론
 RUN mkdir /workspace
