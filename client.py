@@ -12,8 +12,8 @@ import transcoder_pb2_grpc
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument("--in_dir", help="path of files before encoding", )
-parser.add_argument("--out_dir", help="path of files after encoding")
+parser.add_argument("--src_dir", help="path of files before encoding", )
+parser.add_argument("--dst_dir", help="path of files after encoding")
 parser.add_argument("--ip", help="ip address of server machine", default='localhost')
 parser.add_argument("--port", help="port number refers to host ip address", default=50051)
 
@@ -26,17 +26,16 @@ def find_path(file_path):
     valid_files = [file for file in files
                    if file.split('.')[-1] in ['mkv', 'mp4', 'wmv', 'avi', 'mov']]
 
-    print(valid_files)
-
     return valid_files
 
 
-def create_request_form(filename):
-    name = ''.join(filename.split('/')[-1].split('.')[0:-1])
-    format = filename.split('/')[-1].split('.')[-1]
-    file_size = os.stat(filename).st_size
+def create_request_form(filepath):
+    filename = filepath.split('/')[-1]
+    name = ''.join(filename.split('.')[0:-1])
+    format = filename.split('.')[-1]
+    file_size = os.stat(filepath).st_size
     ip_address = str(socket.gethostbyname(socket.gethostname()))
-    url = 'http://{}:8000/{}'.format(ip_address, filename)
+    url = 'http://{}:8000/{}'.format(ip_address, filepath)
 
     return transcoder_pb2.videoBlob(name=name,
                                          format=format,
@@ -46,10 +45,10 @@ def create_request_form(filename):
 
 
 def run():
-    src_dir = args.in_dir
-    dst_dir = args.out_dir
+    src_dir = args.src_dir
+    dst_dir = args.dst_dir
     for file in find_path(src_dir):
-        print('current file name is : {}'.format(file))
+        print('current working file : {}'.format(file))
         with grpc.insecure_channel('{}:{}'.format(args.ip, args.port)) as channel:
             stub = transcoder_pb2_grpc.transcoderTestStub(channel)
             response = stub.videoEncodingRequest(create_request_form(file))
