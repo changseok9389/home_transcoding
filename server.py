@@ -46,8 +46,8 @@ class transcoderTest(transcoder_pb2_grpc.transcoderTestServicer):
                                                                                                         videoBlob.ip_address,
                                                                                                         videoBlob.url))
 
-        download_path_prefix = '/home/transcodingserver/before_encoding'
-        encoding_path_prefix = '/home/transcodingserver/after_encoding'
+        download_path_prefix = '/workspace/before_encoding'
+        encoding_path_prefix = '/workspace/after_encoding'
         download_path = '{}/{}.{}'.format(download_path_prefix, videoBlob.name, videoBlob.format)
         encoding_path = '{}/{}.{}'.format(encoding_path_prefix, videoBlob.name, 'mp4')
         wget.download(videoBlob.url, download_path)
