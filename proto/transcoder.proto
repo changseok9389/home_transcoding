@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package transcoder;
+
+service transcoderTest {
+	rpc videoEncodingRequest (videoBlob) returns (videoBlob) {}
+	rpc videoEncodingAck (downloadAck) returns (downloadAck) {}
+}
+
+message videoBlob {
+	string name = 1;
+	string format = 2;
+	uint64 size = 3;
+	string ip_address = 4;
+	string url = 5;
+}
+
+message downloadAck {
+	string ip_address = 1;
+	string url = 2;
+	string status = 3;
+}
+
+
