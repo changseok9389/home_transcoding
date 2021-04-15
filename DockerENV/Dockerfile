@@ -20,8 +20,9 @@ RUN useradd -r -u 999 -g tcserver tcserver
 
 
 # 파일구조 생성
-RUN mkdir /workspace/before_encoding && chmod +r /workspace/before_encoding
-RUN mkdir /workspace/after_encoding && chmod +w /workspace/after_encoding
+RUN chmod 777 /workspace
+RUN mkdir /workspace/before_encoding && chmod 777 /workspace/before_encoding
+RUN mkdir /workspace/after_encoding && chmod 777 /workspace/after_encoding
 
 # 서버 오픈
 USER tcserver
