@@ -1,3 +1,8 @@
+import threading
+import http.server
+import socket
+from http.server import HTTPServer, SimpleHTTPRequestHandler
+
 from concurrent import futures
 
 import os
@@ -67,6 +72,11 @@ def serve():
 
 
 if __name__ == '__main__':
+    debug = True
+    server = http.server.ThreadingHTTPServer((socket.gethostname(), 8000), SimpleHTTPRequestHandler)
+    thread = threading.Thread(target=server.serve_forever)
+    thread.daemon = True
+    thread.start()
     serve()
 
 
