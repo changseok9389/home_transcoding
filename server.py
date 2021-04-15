@@ -75,7 +75,7 @@ def serve():
 if __name__ == '__main__':
     debug = True
     Handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory='/')
-    server = http.server.ThreadingHTTPServer((socket.gethostname(), 8000), SimpleHTTPRequestHandler)
+    server = http.server.ThreadingHTTPServer((socket.gethostname(), 8000), Handler)
     thread = threading.Thread(target=server.serve_forever)
     thread.daemon = True
     thread.start()
